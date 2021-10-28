@@ -1,5 +1,7 @@
 package example.spring.r2dbc.repository;
 
+import java.util.Map;
+
 import org.reactive.r2dbc.iclient.annotation.Insert;
 import org.reactive.r2dbc.iclient.annotation.Param;
 import org.reactive.r2dbc.iclient.annotation.PropertyMapper;
@@ -17,6 +19,9 @@ import reactor.core.publisher.Mono;
 
 @R2dbcMapper
 public interface UserRepository {
+	
+	@Select("select * from user")
+	public Flux<Map<String, Object>> getAllMap();
 
 	@Results(id = "userMap", type = User.class, value = {
 			@Result(property = "userId", column = "user_id", javaType = Integer.class),

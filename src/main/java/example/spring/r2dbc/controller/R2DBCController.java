@@ -1,5 +1,7 @@
 package example.spring.r2dbc.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,12 @@ public class R2DBCController {
 
 	@Autowired
 	private UserRepository userRepo;
-
+	
+	@GetMapping("/allmap")
+	public Flux<Map<String, Object>> getAllMap() {
+		return userRepo.getAllMap();
+	}
+	
 	@GetMapping("/all")
 	public Flux<User> getAllUser() {
 		return userRepo.getAll();
