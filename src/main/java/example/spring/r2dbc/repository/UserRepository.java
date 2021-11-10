@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 
 @R2dbcMapper
 public interface UserRepository {
-	
+
 	@Select("select * from user")
 	public Flux<Map<String, Object>> getAllMap();
 
@@ -28,19 +28,20 @@ public interface UserRepository {
 			@Result(property = "userName", column = "user_name", javaType = String.class),
 			@Result(property = "userPhone", column = "user_phone", javaType = String.class),
 			@Result(property = "userAddress", javaType = UserAddress.class, resultMap = "userAddressMap") })
-	@Select("select * from user")
-	public Flux<User> getAll();
-
 	@Results(id = "userAddressMap", type = UserAddress.class, value = {
 			@Result(property = "userAddress", column = "user_address", javaType = String.class),
 			@Result(property = "userCity", column = "user_city", javaType = String.class),
 			@Result(property = "userState", column = "user_state", javaType = String.class) })
-	@Select("select * from user")
-	public Flux<UserAddress> getUserAddress();
+	@Select(value = "select * from user", resultMap = "userMap")
+	public Flux<User> getAll();
 
 	@ResultMap("userMap")
 	@Select("select * from user where user_id = :userId")
 	public Mono<User> getUserById(@Param("userId") Integer userId);
+
+	@ResultMap("userMap")
+	@Select("call user_info(:userId)")
+	public Mono<User> getUserByIdSP(@Param("userId") Integer userId);
 
 	@Update(value = "update user set user_name = :user.userName where user_id = :user.userId", propertyMapper = {
 			@PropertyMapper(javaType = String.class, properties = "user.userName"),
