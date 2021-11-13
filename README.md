@@ -20,5 +20,5 @@ Insert one record
 INSERT INTO user (user_name, user_phone, user_address, user_city, user_state) values ('John Dao', '1234567890', '123 Street', 'TestCity', 'TestState');
 </pre>
 
-Follow [read.me](https://github.com/bhautik008/spring-r2dbc-iclient/blob/master/README.md) file of Spring R2DBC iClient for how to use.
+Follow [read.me](https://github.com/bhautik008/spring-r2dbc-iclient/blob/master/README.md) file of Spring R2DBC iClient for how to integrate in your project.
 
